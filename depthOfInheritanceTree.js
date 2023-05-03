@@ -1,7 +1,7 @@
-const esprima = require('esprima');
+const parser = require('@babel/parser');
 
 function calculateDepthOfInheritanceTree(sourceCode) {
-    const ast = esprima.parse(sourceCode);
+    const ast = parser.parse(sourceCode, { sourceType: 'module' });
 
     // Функція, що шукає класи
     function findClasses(node) {
@@ -21,7 +21,7 @@ function calculateDepthOfInheritanceTree(sourceCode) {
     }
 
     // Функція, що шукає батьківський клас
-    function findParentClass(classNode) {
+    function findParentClass(classNode, classes) {
         const parentClassName = classNode.superClass && classNode.superClass.name;
         if (!parentClassName) {
             return null;
@@ -38,10 +38,10 @@ function calculateDepthOfInheritanceTree(sourceCode) {
     let maxDepth = 0;
     for (const classNode of classes) {
         let depth = 0;
-        let parentClass = findParentClass(classNode);
+        let parentClass = findParentClass(classNode, classes);
         while (parentClass) {
             depth++;
-            parentClass = findParentClass(parentClass);
+            parentClass = findParentClass(parentClass, classes);
         }
         maxDepth = Math.max(maxDepth, depth);
     }

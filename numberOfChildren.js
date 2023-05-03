@@ -1,7 +1,7 @@
-const esprima = require('esprima');
+const parser = require('@babel/parser');
 
 function calculateNumberOfChildren(sourceCode) {
-    const ast = esprima.parse(sourceCode);
+    const ast = parser.parse(sourceCode, { sourceType: 'module' });
 
     // Функція, що шукає класи
     function findClasses(node) {
@@ -33,15 +33,13 @@ function calculateNumberOfChildren(sourceCode) {
     const classes = findClasses(ast);
 
     // Шукаємо кількість дочірніх класів для кожного класу
-    const numberOfChildren = classes.map(classNode => {
+    return classes.map(classNode => {
         const childClasses = findChildClasses(classNode);
         return {
             className: classNode.id.name,
             numberOfChildren: childClasses.length,
         };
     });
-
-    return numberOfChildren;
 }
 
 module.exports = calculateNumberOfChildren;
