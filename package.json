@@ -1,0 +1,22 @@
+{
+  "name": "calculation_of_metrics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "classes.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.21.8",
+    "esprima": "^4.0.1",
+    "estraverse": "^5.3.0",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.21",
+    "path": "^0.12.7"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
