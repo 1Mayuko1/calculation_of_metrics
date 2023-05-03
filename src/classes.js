@@ -15,12 +15,25 @@ class Person {
     sayHello() {
         console.log(`Hello, my name is ${this._name}`);
     }
+
+    static get numberOfInstances() {
+        return this._numberOfInstances || 0;
+    }
+
+    static set numberOfInstances(val) {
+        this._numberOfInstances = val;
+    }
+
+    static get numberOfProperties() {
+        return Object.keys(new this()).length;
+    }
 }
 
 class Student extends Person {
     constructor(name, age, school) {
         super(name, age);
         this._school = school;
+        Student.numberOfInstances++;
     }
 
     study() {
@@ -31,12 +44,17 @@ class Student extends Person {
         super.sayHello();
         console.log('I am a student');
     }
+
+    static get numberOfProperties() {
+        return super.numberOfProperties + Object.keys(new this()).length;
+    }
 }
 
 class Teacher extends Person {
     constructor(name, age, subject) {
         super(name, age);
         this._subject = subject;
+        Teacher.numberOfInstances++;
     }
 
     teach() {
@@ -46,6 +64,10 @@ class Teacher extends Person {
     sayHello() {
         super.sayHello();
         console.log('I am a teacher');
+    }
+
+    static get numberOfProperties() {
+        return super.numberOfProperties + Object.keys(new this()).length;
     }
 }
 
@@ -70,6 +92,10 @@ class Classroom {
         for (const student of this.students) {
             student.study();
         }
+    }
+
+    static get numberOfProperties() {
+        return Object.keys(new this()).length;
     }
 }
 
